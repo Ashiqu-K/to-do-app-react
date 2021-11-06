@@ -1,0 +1,22 @@
+.createButton {
+  position: fixed !important;
+  z-index: 2;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background-color: rgb(9, 92, 170) !important;
+  color: white !important;
+
+  @media only screen and (min-width: 600px) {
+    display: none !important;
+  }
+}
+
+.createButtonDesktop {
+  display: none !important;
+
+  @media only screen and (min-width: 600px) {
+    display: inline-flex !important;
+  }
+}

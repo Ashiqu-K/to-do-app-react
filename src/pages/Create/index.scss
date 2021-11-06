@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.card {
+  padding: 20px;
+  margin: 20px 10px;
+  background-color: #fffdf6 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
