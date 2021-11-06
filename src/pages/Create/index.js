@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import * as actions from "../../redux/ToDo/actions";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
-import ToDoInput from "../../components/ToDoInput";
+import ToDoInputForm from "../../components/ToDoInputForm";
 import styles from "./index.scss";
 
 const inputProps = {
@@ -16,16 +16,20 @@ const inputProps = {
 const ToDoCreate = (props) => {
   const [toDoMessage, setToDoMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [invalidTaskId, setInvalidTaskId] = useState(false);
+
   const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       const tasks = [...props.toDos];
-      const editData = tasks.find((task) => task.id === parseInt(id));
+      const editData = tasks.find((task) => task.id === Number(id));
 
       if (editData) {
         setToDoMessage(editData.message);
+      } else {
+        setInvalidTaskId(true);
       }
     }
   }, []);
@@ -45,7 +49,7 @@ const ToDoCreate = (props) => {
     }
     if (id) {
       const data = {
-        id: parseInt(id),
+        id: Number(id),
         message: toDoMessage,
         isCompleted: false,
       };
@@ -72,30 +76,25 @@ const ToDoCreate = (props) => {
           <Typography variant="h4" component="h4" align={"center"} mb={2}>
             {id ? "EDIT TASK" : "CREATE TASK"}
           </Typography>
-          <ToDoInput
-            label="Enter task"
-            errorMessage={errorMessage}
-            value={toDoMessage}
-            onChange={handleOnChange}
-          />
-          <div className={styles.buttonContainer}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={handleCancel}
-              sx={{ m: 1 }}
-            >
-              {"CANCEL"}
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              sx={{ m: 1 }}
-            >
-              {id ? "UPDATE" : "CREATE"}
-            </Button>
-          </div>
+          {invalidTaskId ? (
+            <>
+              <Divider />
+              <Typography variant="h6" align="center" sx={{ mb: 2, mt: 2 }}>
+                {"Task could not be found for the given Id. Return to the "}
+                <Link to="/">{"Home Page."}</Link>
+              </Typography>
+            </>
+          ) : (
+            <ToDoInputForm
+              label="Enter task"
+              isEdit={!!id}
+              errorMessage={errorMessage}
+              value={toDoMessage}
+              onChange={handleOnChange}
+              onCancel={handleCancel}
+              onSubmit={handleSubmit}
+            />
+          )}
         </Card>
       </div>
     </>

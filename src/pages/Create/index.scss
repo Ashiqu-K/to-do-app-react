@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   max-width: 900px;
-  margin: 20px auto;
+  margin: 30px auto;
 }
 
 .card {
@@ -10,10 +10,4 @@
   background-color: #fffdf6 !important;
   display: flex;
   flex-direction: column;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 }

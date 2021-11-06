@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -8,10 +8,15 @@ import Divider from "@mui/material/Divider";
 
 import * as actions from "../../redux/ToDo/actions";
 import ToDoItem from "../../components/ToDoItem";
+import ConfirmModal from "../../components/ConfirmModal";
+
 import styles from "./index.scss";
 
 const ToDoList = (props) => {
   console.log("props", props);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteTaskId, setDeleteTaskId] = useState(null);
+
   const history = useHistory();
 
   const handleMarkItem = (task) => {
@@ -22,12 +27,26 @@ const ToDoList = (props) => {
     props.markItem(data);
   };
 
-  const handleDelete = (id) => {
-    props.deleteItem(id);
+  const onEditClick = (id) => {
+    history.push(`/edit/${id}`);
   };
 
-  const handleEdit = (id) => {
-    history.push(`/edit/${id}`);
+  const onDeleteClick = (id) => {
+    setShowDeleteConfirmation(true);
+    setDeleteTaskId(id);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setDeleteTaskId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteTaskId) {
+      props.deleteItem(deleteTaskId);
+      setDeleteTaskId(null);
+    }
+    setShowDeleteConfirmation(false);
   };
 
   return (
@@ -39,8 +58,9 @@ const ToDoList = (props) => {
         {!props.toDos.length && (
           <>
             <Divider />
-            <Typography variant="h6" align="center" mt={2} mb={2}>
-              {"No tasks added. Create a new task."}
+            <Typography variant="h6" align="center" sx={{ mb: 2, mt: 2 }}>
+              {"No tasks added. Create a "}
+              <Link to="/create">{"new task."}</Link>
             </Typography>
           </>
         )}
@@ -48,12 +68,19 @@ const ToDoList = (props) => {
           <ToDoItem
             key={index}
             task={task}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
+            handleEdit={onEditClick}
+            handleDelete={onDeleteClick}
             handleMarkItem={handleMarkItem}
           />
         ))}
       </Card>
+      <ConfirmModal
+        show={showDeleteConfirmation}
+        title={"Confirm Delete"}
+        message={"Are you sure you want to delete this task?"}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 };
