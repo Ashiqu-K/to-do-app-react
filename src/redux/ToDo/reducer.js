@@ -7,40 +7,7 @@ import {
 
 const initialState = {
   /* Mock data */
-  toDoList: [
-    {
-      id: 1001,
-      message: "Create a new github repository for To-Do app.",
-      isCompleted: true,
-    },
-    {
-      id: 1002,
-      message: "Complete initial setup for the To-Do app using React.",
-      isCompleted: true,
-    },
-    {
-      id: 1003,
-      message: "Create routes for Task list, create and edit pages.",
-      isCompleted: true,
-    },
-    {
-      id: 1004,
-      message:
-        "Implement task list page with features for delete and strike/complete a task.",
-      isCompleted: false,
-    },
-    {
-      id: 1005,
-      message: "Implement Create/Edit page for a Task.",
-      isCompleted: false,
-    },
-
-    {
-      id: 1006,
-      message: "Commit and push the code in Github.",
-      isCompleted: false,
-    },
-  ],
+  toDoList: [],
 };
 
 const reducer = (state = initialState, action) => {

@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import styles from "./index.scss";
 
@@ -33,7 +33,7 @@ const Navbar = () => {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <FormatListBulletedOutlinedIcon />
+              <ListAltIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {"TO-DO APP"}
